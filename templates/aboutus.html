@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>StockSavvy</title>
+
+    <style>
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            text-align: center;
+            background-color: white;
+            margin: 0;
+            /* background-image: "{{ url_for('static', filename='Home.gif') }}"; */
+        }
+        #profile-container h1 {
+            font-size: 50px;
+            margin-bottom: 20px;
+            color: #333;
+        }
+        .button-container {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            padding: 10px;
+            z-index: 1; /* Ensure the button container is on top of other elements */
+        }
+        .button-container a.button {
+            margin-right: 10px;
+            background-color: transparent;
+            border: 2px solid transparent;
+            padding: 10px 15px;
+            font-size: 16px;
+            color: black;
+            text-decoration: none;
+            transition: background-color 0.3s ease, transform 0.3s ease, border-color 0.3s ease;
+        }
+        .button-container a.button:hover {
+            background-color: #e0e0e0;
+            transform: scale(1.05);
+            border-color: #333;
+        }
+
+        .logo-container img {
+            position: fixed;
+            top: 10px;
+            left: 10px;
+            padding: 10px;
+            width: 100px;
+            height: 60px;
+        }
+        .container-background {
+            position: fixed;
+            left: 0px;
+            right: 0px;
+            top: 80px;
+            height: 100%;
+            width: 100%;
+            z-index: -1;
+           pointer-events: none;
+        }
+        .container-background img {
+            /* position: fixed;
+            left: 0px;
+            right: 0px;
+            top: 80px; */
+            height: 100%;
+            width: 100%;
+            z-index: -1;
+            pointer-events: none;
+        }
+        #profile-container {
+            /* background-color: #fff; */
+            /* padding: 20px; */
+            /* border-radius: 5px; */
+            /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); */
+            top: 15%;
+            /* width: 80%;
+            height: 80%; */
+            position: absolute;
+        }
+        .profile {
+            display: inline-block;
+            vertical-align: top;
+            width: 300px;
+            margin-right: 20px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            background-color: #f9f9f9;
+            padding: 20px;
+            text-align: left;
+        }
+
+        .profile-image {
+            margin-bottom: 10px;
+        }
+
+        /* .profile a.button {
+            margin-top: 20px;
+            background-color: #333;
+            border: 2px solid #333;
+            padding: 10px 15px;
+            font-size: 16px;
+            color: white;
+            text-decoration: none;
+            transition: background-color 0.3s ease, transform 0.3s ease, border-color 0.3s ease;
+            border-radius: 5px;
+        }
+        .profile a.button:hover {
+            background-color: #555;
+            transform: scale(1.05);
+        } */
+        .profile-image img {
+            max-width: 100%;
+            height: 300px;
+            width: 300px;
+        }
+        .profile-content h2 {
+            font-size: 18px;
+
+        }
+
+        .profile-title {
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+
+        .profile-description {
+            font-size: 16px;
+            color: #777;
+        }
+    </style>
+</head>
+<body>
+    <div class="button-container">
+        <a href="/" class="button">Home</a>
+        <a href="/actual" class="button">Actual</a>
+        <a href="/prediksi/" class="button">Predict</a>
+        <a href="/fundamental" class="button">Fundamental</a>
+        <a href="/profil" class="button">Contact</a>
+    </div>
+    
+    <div class="logo-container">
+        <img src="{{ url_for('static', filename='logo.png') }}" alt="Logo">
+    </div>
+
+    <div class="container-background">
+        <img src="{{ url_for('static', filename='Home1.gif') }}" alt="My GIF">
+    </div>
+    
+    <!-- <h1>Fitur Web</h1> -->
+
+    <div id="profile-container">
+        <h1>Our Team</h1>
+        <!-- <div class="container-background">
+            <img src="{{ url_for('static', filename='Home1.gif') }}" alt="My GIF">
+        </div> -->
+
+        <div class="profile">
+            <div class="profile-image">
+                <img src="{{ url_for('static', filename='foto1.jpg') }}" alt="Gambar Fitur 1">
+            </div>
+            <div class="profile-content">
+                <h2 class="prrofile-title">Aqila Hana Winanggoro</h2>
+                <p class="profile-description">NIM.164221010</p>
+            </div>
+        </div>
+                <!-- <a href="/actual" class="button">Grafik Harga Saham Aktual</a> -->
+        <div class="profile">
+            <div class="profile-image">
+                <img src="{{ url_for('static', filename='foto2.jpg') }}" alt="Gambar Fitur 1">
+            </div>
+            <div class="profile-content">
+                <h2 class="prrofile-title">Ditha Meiga Zakaria</h2>
+                <p class="profile-description">NIM.164221019</p>
+            </div>
+        </div>
+    
+        <div class="profile">
+            <div class="profile-image">
+                <img src="{{ url_for('static', filename='foto3.jpg') }}" alt="Gambar Fitur 1">
+            </div>
+            <div class="profile-content">
+                <h2 class="prrofile-title">Yusuf Eka Maulana</h2>
+                <p class="profile-description">NIM.164221020</p>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- <div class="profile">
+        <div class="profile-image">
+            <img src="gambar1.jpg" alt="Gambar Fitur 1">
+        </div>
+        <div class="profile-content">
+            <h2 class="profile-title">Fitur 1</h2>
+            <p class="profile-description">Penjelasan tentang fitur 1.</p>
+        </div>
+    </div>
+
+    <div class="profile">
+        <div class="profile-image">
+            <img src="gambar2.jpg" alt="Gambar Fitur 2">
+        </div>
+        <div class="profile-content">
+            <h2 class="profile-title">Fitur 2</h2>
+            <p class="profile-description">Penjelasan tentang fitur 2.</p>
+        </div>
+    </div>
+
+    <div class="profile">
+        <div class="profile-image">
+            <img src="gambar3.jpg" alt="Gambar Fitur 3">
+        </div>
+        <div class="profile-content">
+            <h2 class="profile-title">Fitur 3</h2>
+            <p class="profile-description">Penjelasan tentang fitur 3.</p>
+        </div>
+    </div> -->
+
+    
+</body>
+</html>

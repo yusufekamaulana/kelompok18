@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta content="IE=edge" http-equiv="X-UA-Compatible">
+  <meta content="width=device-width, initial-scale=1" name="viewport">
+  <script src="https://cdn.anychart.com/releases/v8/js/anychart-bundle.min.js"></script>
+  <meta content="Area Chart" name="keywords">
+  <meta content="AnyChart - JavaScript Charts designed to be embedded and integrated" name="description">
+
+  <style>
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      text-align: center;
+      background-size: cover;
+      margin: 0;
+      position: relative;
+    }
+    h1 {
+      font-size: 40px;
+      /* margin-bottom: 45%; */
+      color: #333;
+    }
+    p {
+      font-family: Arial, Helvetica, sans-serif;
+      /* margin-top: 10%; */
+      font-size: 16px;
+    }
+    .button-container {
+      position: fixed;
+      top: 10px;
+      right: 10px;
+      padding: 10px;
+      z-index: 1; /* Ensure the button container is on top of other elements */
+    }
+    .button-container a.button {
+      margin-right: 10px;
+      background-color: transparent;
+      border: 2px solid transparent;
+      padding: 10px 15px;
+      font-size: 16px;
+      color: black;
+      text-decoration: none;
+      transition: background-color 0.3s ease, transform 0.3s ease, border-color 0.3s ease;
+    }
+    .button-container a.button:hover {
+      background-color: #e0e0e0;
+      transform: scale(1.05);
+      border-color: #333;
+      /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); */
+    }
+    .logo-container img {
+      position: fixed;
+      top: 10px;
+      left: 10px;
+      padding: 10px;
+      width: 100px;
+      height: 60px;
+    }
+    .container-background {
+      position: fixed;
+      left: 0px;
+      right: 0px;
+      top: 80px;
+      height: 100%;
+      width: 100%;
+      z-index: -1;
+      pointer-events: none;
+    }
+  .container-background img {
+      /* position: fixed;
+      left: 0px;
+      right: 0px;
+      top: 80px; */
+      height: 100%;
+      width: 100%;
+      z-index: -1;
+      pointer-events: none;
+    }
+    #input {
+      top: 30px; /* Ubah nilai ini sesuai kebutuhan */
+      transform: translateY(30px);
+      position: absolute;
+    }
+  /* .input h1 {
+      top: 45px;
+  } */
+    #input form {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-top: 20px;
+      top: 60px;
+    }
+
+    #input label {
+      font-size: 16px;
+      margin-bottom: 5px;
+      font-weight: bold;
+    }
+
+    #input select{
+      padding: 10px;
+      font-size: 14px;
+      border-radius: 5px;
+      border: none;
+      margin-bottom: 15px;
+      width: 300px;
+      max-width: 100%;
+      box-sizing: border-box;
+    }
+
+    #input button {
+      padding: 10px;
+      font-size: 14px;
+      border-radius: 5px;
+      border: none;
+      margin-bottom: 15px;
+      width: 300px;
+      max-width: 100%;
+      box-sizing: border-box;
+      background-color: #333;
+      color: white;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    #input button:hover {
+      background-color: #555;
+    }
+    .container-wrapper {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      /* display: flex; */
+      top: 400px;
+      width: 90%;
+      height: 100%;
+
+    }
+    #container1, #container2 {
+      /* flex: 1; */
+      /* top: 500px;
+      float: left;
+      width: 50%; */
+      /* background-color: #fff;
+      border-radius: 5px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); */
+      height: 310px;
+      width: 500px;
+    }
+      /* flex: 1; */
+      /* top: 500px;
+      float: right;
+      width: 50%; */
+      /* background-color: #fff;
+      border-radius: 5px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); */
+    
+    
+  </style>
+</head>
+<body>
+    <div class="button-container">
+      <a href="/" class="button">Home</a>
+      <a href="/actual" class="button">Actual</a>
+      <a href="/prediksi/" class="button">Predict</a>
+      <a href="/fundamental" class="button">Fundamental</a>
+      <a href="/profil" class="button">Contact</a>
+  </div>
+  
+  <div class="logo-container">
+      <img src="{{ url_for('static', filename='logo.png') }}" alt="Logo">
+  </div>
+
+  <div class="container-background">
+    <img src="{{ url_for('static', filename='Home1.gif') }}" alt="My GIF">
+  </div>
+
+  <div id="input">
+    <h1>Analisis Fundamental</h1>
+    <div class="emiteninput">
+      <form method="post" action="/fundamental">
+        <label for="emiteninput">Pilih Emiten 1:</label>
+        <select name="emiteninput" id="emiteninput">
+            <option value="CPIN.JK">PT Charoen Pokphand Indonesia Tbk</option>
+            <option value="GGRM.JK">PT Gudang Garam Tbk</option>
+            <option value="INDF.JK">PT Indofood Sukses Makmur Tbk</option>
+            <option value="UNVR.JK">PT Unilever Indonesia Tbk</option>
+            <option value="BBCA.JK">PT Bank Central Asia Tbk</option>
+            <option value="BBNI.JK">PT Bank Negara Indonesia (Persero) Tbk</option>
+            <option value="BBRI.JK">PT Bank Rakyat Indonesia (Persero) Tbk</option>
+            <option value="BBTN.JK">PT Bank Tabungan Negara (Persero) Tbk</option>
+            <option value="BMRI.JK">PT Bank Mandiri (Persero) Tbk</option>
+            <option value="BRIS.JK">PT Bank Syariah Indonesia Tbk</option>
+        </select>
+        <label for="emiteninput2">Pilih Emiten 2:</label>
+        <select name="emiteninput2" id="emiteninput2">
+          <option value="CPIN.JK">PT Charoen Pokphand Indonesia Tbk</option>
+          <option value="GGRM.JK">PT Gudang Garam Tbk</option>
+          <option value="INDF.JK">PT Indofood Sukses Makmur Tbk</option>
+          <option value="UNVR.JK">PT Unilever Indonesia Tbk</option>
+          <option value="BBCA.JK">PT Bank Central Asia Tbk</option>
+          <option value="BBNI.JK">PT Bank Negara Indonesia (Persero) Tbk</option>
+          <option value="BBRI.JK">PT Bank Rakyat Indonesia (Persero) Tbk</option>
+          <option value="BBTN.JK">PT Bank Tabungan Negara (Persero) Tbk</option>
+          <option value="BMRI.JK">PT Bank Mandiri (Persero) Tbk</option>
+          <option value="BRIS.JK">PT Bank Syariah Indonesia Tbk</option>
+        </select>
+        <label for="analisis">Pilih Jenis Analisis:</label>
+        <select name="analisis" id="analisis">
+          <option value="dividen">Dividen</option>
+          <option value="financial">Financial</option>
+          <option value="modal">Modal</option>
+          <option value="ekuitas">Ekuitas</option>
+        </select>
+        <button type="submit">Analisis Fundamental</button>
+    </form>
+  </div>
+
+  <div class="container-wrapper">
+    <div id="container1">
+    </div>
+  
+    <div id="container2">
+    </div>
+  </div>
+
+
+<!-- DIVIDEN -->
+  <script>
+    anychart.onDocumentReady(function () {
+      // Data JSON yang diberikan
+      var jsonData = ({{json_dividen | safe}});
+      var jsonData2 = ({{json_dividen2 | safe}});
+
+      // Create a data set
+      var dataSet = anychart.data.set(jsonData);
+      var dataSet2 = anychart.data.set(jsonData2);
+
+      // Create a line chart
+      var chart = anychart.line();
+      var chart2 = anychart.line();
+
+      // Nama Emiten
+      var namaEmiten = "{{ long_name }}";
+      console.log("Nilai emiten:", namaEmiten);
+      var namaEmiten2 = "{{ long_name2 }}";
+      console.log("Nilai emiten:", namaEmiten2);
+
+      // Set chart title
+      chart.title('Dividen ' + namaEmiten);
+      chart2.title('Dividen ' + namaEmiten2);
+
+      // Set X-axis title
+      chart.xAxis().title('Date');
+      chart2.xAxis().title('Date');
+
+      // Set Y-axis title
+      chart.yAxis().title('Dividen(Rp.)');
+      chart2.yAxis().title('Dividen(Rp.)');
+
+      // Set container id for the chart
+      chart.container('container1');
+      chart2.container('container2');
+
+      // Map data for the series
+      var series = chart.line(dataSet.mapAs({ x: 0, value: 1 }));
+      var series2 = chart2.line(dataSet2.mapAs({ x: 0, value: 1 }));
+
+      // Enable markers for data points
+      series.markers(true);
+      series2.markers(true);
+
+      // Draw the chart
+      chart.draw();
+      chart2.draw();
+    });
+  </script>
+
+<!-- FINANSIAL -->
+  <script>
+    anychart.onDocumentReady(function () {
+      // Data JSON yang diberikan
+      var jsonData = ({{json_financial | safe}});
+      var jsonData2 = ({{json_financial2 | safe}});
+
+      // Parse data JSON
+      var chartData = anychart.data.set(jsonData);
+      var chartData2 = anychart.data.set(jsonData2);
+
+      // Create column chart
+      var chart = anychart.column();
+      var chart2 = anychart.column();
+
+      // Set chart data with series names
+      chart.data(chartData);
+      chart.animation(true);
+      chart.legend().enabled(true).fontSize(13).padding([0, 0, 20, 0]);
+
+      chart2.data(chartData2);
+      chart2.animation(true);
+      chart2.legend().enabled(true).fontSize(13).padding([0, 0, 20, 0]);
+
+      // Nama Emiten
+      var namaEmiten = "{{ long_name }}";
+      console.log("Nilai emiten:", namaEmiten);
+      var namaEmiten2 = "{{ long_name2 }}";
+      console.log("Nilai emiten:", namaEmiten2);
+
+      // Set chart title
+      chart.title('FINANSIAL ' + namaEmiten);
+      chart2.title('FINANSIAL ' + namaEmiten2);
+
+      // Set Y-axis title
+      chart.yAxis().title('Jumlah (Rp.)');
+      chart2.yAxis().title('Jumlah (Rp.)');
+
+      // Set X-axis title
+      chart.xAxis().title('Tanggal');
+      chart2.xAxis().title('Tanggal');
+
+      // Set series names
+      chart.getSeries(0).name('Net Income').color('#f86761');
+      chart.getSeries(1).name('Operating Revenue').color('#2563c7');
+      chart.getSeries(2).name('Operating Expense').color('#25324c');
+
+      chart2.getSeries(0).name('Net Income').color('#f86761');
+      chart2.getSeries(1).name('Operating Revenue').color('#2563c7');
+      chart2.getSeries(2).name('Operating Expense').color('#25324c');
+
+      // Set container id for the chart
+      chart.container('container1');
+      chart2.container('container2');
+
+      // Format Y-axis labels in Rupiah (IDR) in billion (miliar) or trillion (triliun)
+      chart.yAxis().labels().format(function() {
+        return this.value / 1e9 + ' M'; // for billion
+        // return this.value / 1e12 + ' Triliun'; // for trillion
+      });
+      chart2.yAxis().labels().format(function() {
+        return this.value / 1e9 + ' M'; // for billion
+        // return this.value / 1e12 + ' Triliun'; // for trillion
+      });
+
+      // Draw the chart
+      chart.draw();
+      chart2.draw();
+    });
+  </script>
+
+  <!-- <script>
+    anychart.onDocumentReady(function () {
+      // Data JSON yang diberikan
+      var jsonData = ({{json_cashflow | safe}});
+      // Parse data JSON
+      var chartData = anychart.data.set(jsonData);
+
+      // Create column chart
+      var chart = anychart.column();
+
+      // Set chart data with series names
+      chart.data(chartData);
+      chart.animation(true);
+      chart.legend().enabled(true).fontSize(13).padding([0, 0, 20, 0]);
+
+      var namaEmiten = "{{ long_name }}";
+      // Gunakan variabel di dalam skrip JavaScript
+      console.log("Nilai emiten:", namaEmiten);
+
+      // Set chart title
+      chart.title('CASHFLOW ' + namaEmiten);
+
+      // Set Y-axis title
+      chart.yAxis().title('Jumlah (Rp.)');
+
+      // Set X-axis title
+      chart.xAxis().title('Tanggal');
+
+      // Set series names
+      chart.getSeries(1).name('Free Cash Flow	').color('#25324c');
+      chart.getSeries(0).name('Operating Cash Flow').color('#2563c7');
+
+      // Set container id for the chart
+      chart.container('Dividen');
+
+      // Format Y-axis labels in Rupiah (IDR) in billion (miliar) or trillion (triliun)
+      chart.yAxis().labels().format(function() {
+        return this.value / 1e9 + ' M'; // for billion
+        // return this.value / 1e12 + ' Triliun'; // for trillion
+      });
+
+      // Draw the chart
+      chart.draw();
+    });
+  </script> -->
+
+<!-- MODAL -->
+  <script>
+    anychart.onDocumentReady(function () {
+      // Data JSON yang diberikan
+      var jsonData = ({{json_modal | safe}});
+      var jsonData2 = ({{json_modal2 | safe}});
+
+      // Parse data JSON
+      var chartData = anychart.data.set(jsonData);
+      var chartData2 = anychart.data.set(jsonData2);
+
+      // Create column chart
+      var chart = anychart.column();
+      var chart2 = anychart.column();
+
+      // Set chart data with series names
+      chart.data(chartData);
+      chart.animation(true);
+      chart.legend().enabled(true).fontSize(13).padding([0, 0, 20, 0]);
+
+      chart2.data(chartData2);
+      chart2.animation(true);
+      chart2.legend().enabled(true).fontSize(13).padding([0, 0, 20, 0]);
+
+      // Nama Emiten
+      var namaEmiten = "{{ long_name }}";
+      console.log("Nilai emiten:", namaEmiten);
+      var namaEmiten2 = "{{ long_name2 }}";
+      console.log("Nilai emiten:", namaEmiten2);
+
+      // Set chart title
+      chart.title('STRUKTUR MODAL ' + namaEmiten);
+      chart2.title('STRUKTUR MODAL ' + namaEmiten2);
+
+      // Set Y-axis title
+      chart.yAxis().title('Jumlah (Rp.)');
+      chart2.yAxis().title('Jumlah (Rp.)');
+
+      // Set X-axis title
+      chart.xAxis().title('Tanggal');
+      chart2.xAxis().title('Tanggal');
+
+      // Set series names
+      chart.getSeries(0).name('Total Debt').color('#f86761');
+      chart.getSeries(1).name('Common Stock Equity').color('#2563c7');
+      chart.getSeries(2).name('Total Capitalization').color('#25324c');
+
+      chart2.getSeries(0).name('Total Debt').color('#f86761');
+      chart2.getSeries(1).name('Common Stock Equity').color('#2563c7');
+      chart2.getSeries(2).name('Total Capitalization').color('#25324c');
+
+      // Set container id for the chart
+      chart.container('container1');
+      chart2.container('container2');
+
+      // Format Y-axis labels in Rupiah (IDR) in billion (miliar) or trillion (triliun)
+      chart.yAxis().labels().format(function() {
+        return this.value / 1e9 + ' M'; // for billion
+        // return this.value / 1e12 + ' Triliun'; // for trillion
+      });
+      chart2.yAxis().labels().format(function() {
+        return this.value / 1e9 + ' M'; // for billion
+        // return this.value / 1e12 + ' Triliun'; // for trillion
+      });
+
+      // Draw the chart
+      chart.draw();
+      chart2.draw();
+    });
+  </script>
+<!-- EKUITAS -->
+  <script>
+    anychart.onDocumentReady(function () {
+      // Data JSON yang diberikan
+      var jsonData = ({{json_ekuitas | safe}});
+      var jsonData2 = ({{json_ekuitas2 | safe}});
+      // Parse data JSON
+      var chartData = anychart.data.set(jsonData);
+      var chartData2 = anychart.data.set(jsonData2);
+
+      // Create column chart
+      var chart = anychart.column();
+      var chart2 = anychart.column();
+
+      // Set chart data with series names
+      chart.data(chartData);
+      chart.animation(true);
+      chart.legend().enabled(true).fontSize(13).padding([0, 0, 20, 0]);
+
+      chart2.data(chartData2);
+      chart2.animation(true);
+      chart2.legend().enabled(true).fontSize(13).padding([0, 0, 20, 0]);
+
+      // Nama Emiten
+      var namaEmiten = "{{ long_name }}";
+      console.log("Nilai emiten:", namaEmiten);
+      var namaEmiten2 = "{{ long_name2 }}";
+      console.log("Nilai emiten:", namaEmiten2);
+
+      // Set chart title
+      chart.title('ANALISIS EKUITAS ' + namaEmiten);
+      chart2.title('ANALISIS EKUITAS ' + namaEmiten2);
+
+      // Set Y-axis title
+      chart.yAxis().title('Jumlah (Rp.)');
+      chart2.yAxis().title('Jumlah (Rp.)');
+
+      // Set X-axis title
+      chart.xAxis().title('Tanggal');
+      chart2.xAxis().title('Tanggal');
+
+      // Set series names
+      chart.getSeries(0).name('Stockholders Equity').color('#f86761');
+      chart.getSeries(1).name('Retained Earnings').color('#2563c7');
+      chart.getSeries(2).name('Common Stock').color('#25324c');
+
+      chart2.getSeries(0).name('Stockholders Equity').color('#f86761');
+      chart2.getSeries(1).name('Retained Earnings').color('#2563c7');
+      chart2.getSeries(2).name('Common Stock').color('#25324c');
+
+      // Set container id for the chart
+      chart.container('container1');
+      chart2.container('container2');
+
+      // Format Y-axis labels in Rupiah (IDR) in billion (miliar) or trillion (triliun)
+      chart.yAxis().labels().format(function() {
+        return this.value / 1e9 + ' M'; // for billion
+        // return this.value / 1e12 + ' Triliun'; // for trillion
+      });
+      chart2.yAxis().labels().format(function() {
+        return this.value / 1e9 + ' M'; // for billion
+        // return this.value / 1e12 + ' Triliun'; // for trillion
+      });
+
+      // Draw the chart
+      chart.draw();
+      chart2.draw();
+    });
+  </script>
+  
+
+</body>
+</html>

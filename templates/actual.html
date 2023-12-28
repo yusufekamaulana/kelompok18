@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Actual Stock Chart</title>
+    <link href="https://cdn.anychart.com/releases/8.10.0/css/anychart-ui.min.css" type="text/css" rel="stylesheet">
+    <link href="https://cdn.anychart.com/releases/8.10.0/fonts/css/anychart-font.min.css" type="text/css" rel="stylesheet">
+    
+    <style>
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            text-align: center;
+            background-size: cover;
+            margin: 0;
+            position: relative;
+        }
+        h1 {
+            font-size: 40px;
+            /* margin-bottom: 45%; */
+            color: #333;
+        }
+        .button-container {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            padding: 10px;
+            z-index: 1; /* Ensure the button container is on top of other elements */
+        }
+        .button-container a.button {
+            margin-right: 10px;
+            background-color: transparent;
+            border: 2px solid transparent;
+            padding: 10px 15px;
+            font-size: 16px;
+            color: black;
+            text-decoration: none;
+            transition: background-color 0.3s ease, transform 0.3s ease, border-color 0.3s ease;
+        }
+        .button-container a.button:hover {
+            background-color: #e0e0e0;
+            transform: scale(1.05);
+            border-color: #333;
+            /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); */
+        }
+        .logo-container img {
+            position: fixed;
+            top: 10px;
+            left: 10px;
+            padding: 10px;
+            width: 100px;
+            height: 60px;
+        }
+        .container-background {
+            position: fixed;
+            left: 0px;
+            right: 0px;
+            top: 80px;
+            height: 100%;
+            width: 100%;
+            z-index: -1;
+           pointer-events: none;
+        }
+        .container-background img {
+            /* position: fixed;
+            left: 0px;
+            right: 0px;
+            top: 80px; */
+            height: 100%;
+            width: 100%;
+            z-index: -1;
+            pointer-events: none;
+        }
+        #input {
+            position: absolute;
+            top: 100px; /* Ubah nilai ini sesuai kebutuhan */
+            /* transform: translateY(100px);  */
+
+        }
+        #input form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 20px;
+            top: 60px;
+        }
+
+        #input label {
+            font-size: 16px;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        #input select{
+            padding: 10px;
+            font-size: 14px;
+            border-radius: 5px;
+            border: none;
+            margin-bottom: 15px;
+            width: 300px;
+            max-width: 100%;
+            box-sizing: border-box;
+            
+        }
+
+        #input button {
+            padding: 10px;
+            font-size: 14px;
+            border-radius: 5px;
+            border: none;
+            margin-bottom: 15px;
+            width: 300px;
+            max-width: 100%;
+            box-sizing: border-box;
+            background-color: #333;
+            color: white;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        /* #emitenSelect {
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            text-indent: 1px;
+            text-overflow: '';
+        } */
+        /* button {
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            text-indent: 1px;
+            text-overflow: '';
+        } */
+
+        #input button:hover {
+            background-color: #555;
+        }
+
+        #container {
+            /* position: fixed; */
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            top: 350px;
+            width: 80%;
+            height: 80%;
+            position: absolute;
+            text-align: center;
+            /* transform: translateY(100px);  */
+        }
+        
+        #container-info {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            top: 700px;
+            margin-top: 10px;
+            width: 80%;
+            position: relative;
+            transform: translateY(150px); 
+            text-align: justify;
+        }
+
+        #container-info .info {
+            font-size: 16px;
+            font-weight: bold;
+            /* margin-bottom: 5px; */
+            line-height: normal;
+        }
+        /* #container-info p.long {
+            font-size: 16px;
+            text-align: end;
+        } */
+        #container-info p.business-summary, p.long_name {
+            font-size: 16px;
+            text-align: end;
+        }
+
+        .info-lanjut {
+            top: 850px;
+            margin-top: 20px;
+            /* position: inherit; */
+            transform: translateY(850px); 
+        }
+        .info-lanjut a.button {
+            /* top: 950px; */
+            background-color: #333;
+            border: 2px solid #333;
+            padding: 10px 15px;
+            font-size: 16px;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease, transform 0.3s ease, border-color 0.3s ease;
+        }
+
+        .info-lanjut button:hover {
+            background-color: #555;
+            /* transform: scale(1.05); */
+        }
+        
+    </style>
+</head>
+<body>
+    <div class="button-container">
+        <a href="/" class="button">Home</a>
+        <a href="/actual" class="button">Actual</a>
+        <a href="/prediksi/" class="button">Predict</a>
+        <a href="/fundamental" class="button">Fundamental</a>
+        <a href="/profil" class="button">Contact</a>
+    </div>
+
+    <div class="logo-container">
+        <img src="{{ url_for('static', filename='logo.png') }}">
+    </div>
+
+    <div class="container-background">
+        <img src="{{ url_for('static', filename='Home1.gif') }}" alt="My GIF">
+    </div>
+
+    <div id="input">
+        <h1>Harga Saham Aktual</h1>
+        <form method="post" action="/actual">
+            <label for="emitenSelect">Pilih Emiten:</label>
+            <select name="emitenSelect" id="emitenSelect">
+                <!-- <option value="AMRT.JK">PT Sumber Alfaria Trijaya Tbk</option> -->
+                <option value="CPIN.JK">PT Charoen Pokphand Indonesia Tbk</option>
+                <option value="GGRM.JK">PT Gudang Garam Tbk</option>
+                <!-- <option value="ICBP.JK">PT Indofood CBP Sukses Makmur Tbk</option> -->
+                <option value="INDF.JK">PT Indofood Sukses Makmur Tbk</option>
+                <option value="UNVR.JK">PT Unilever Indonesia Tbk</option>
+                <!-- <option value="ARTO.JK">PT Bank Jago Tbk</option> -->
+                <option value="BBCA.JK">PT Bank Central Asia Tbk</option>
+                <option value="BBNI.JK">PT Bank Negara Indonesia (Persero) Tbk</option>
+                <option value="BBRI.JK">PT Bank Rakyat Indonesia (Persero) Tbk</option>
+                <option value="BBTN.JK">PT Bank Tabungan Negara (Persero) Tbk</option>
+                <option value="BMRI.JK">PT Bank Mandiri (Persero) Tbk</option>
+                <option value="BRIS.JK">PT Bank Syariah Indonesia Tbk</option>
+                <!-- <option value="SRTG.JK">PT Saratoga Investama Sedaya Tbk</option> -->
+            </select>
+            <button type="submit">Lihat Grafik</button>
+        </form>
+    </div>
+
+    <div id="container">    
+    
+    </div>
+    
+    <div id="container-info">
+        <p class="info">INFORMASI</p>
+        <p>{{ long_name }}</p>
+        <!-- <p>Sector {{sector}}</p> -->
+        <p>{{business_summary}}</p>
+        <!-- <a href="/fundamental" class="button">Informasi Lebih Lanjut</a> -->
+    </div>
+
+    <div class="info-lanjut">
+        <a href="/fundamental" class="button">Lihat Analisis Fundamental</a>
+    </div>  
+
+    <script src="https://cdn.anychart.com/releases/8.10.0/js/anychart-core.min.js"></script>
+    <script src="https://cdn.anychart.com/releases/8.10.0/js/anychart-stock.min.js"></script>
+    <script src="https://cdn.anychart.com/releases/8.10.0/js/anychart-data-adapter.min.js"></script>
+    <script src="https://cdn.anychart.com/releases/8.10.0/js/anychart-ui.min.js"></script>
+    <script src="https://cdn.anychart.com/releases/8.10.0/js/anychart-exports.min.js"></script>
+
+    <script>
+        anychart.onDocumentReady(function () {
+            // create data table on loaded data
+            var dataTable = anychart.data.table(0);
+
+            // add data
+            dataTable.addData({{jsoon|safe}});
+
+            // map the data
+            var mapping = dataTable.mapAs({open: 1, high: 2, low: 3, close: 4});
+
+            var chart = anychart.stock();
+
+            // create first plot on the chart
+            var plot = chart.plot(0);
+
+            // set grid settings
+            plot.yGrid(true).xGrid(true).yMinorGrid(true).xMinorGrid(true);
+
+            // emiten select
+            var namaEmiten = "{{ long_name }}";
+            // Gunakan variabel di dalam skrip JavaScript
+            console.log("Nilai emiten:", namaEmiten);
+
+            // create and setup line series
+            var lineSeries = plot.line(dataTable)
+            .name(namaEmiten);
+            // set rising/falling and normal stroke settings
+            lineSeries.risingStroke('#2FA85A', 3, null, 'round', 'round');
+            lineSeries.fallingStroke('#EE4237', 3, null, 'round', 'round');
+
+            // create scroller series
+            chart.scroller().line(dataTable);
+
+            // set chart selected date/time range
+            chart.selectRange('2020-11-27', '2021-11-26');
+
+            // create range picker
+            var rangePicker = anychart.ui.rangePicker();
+
+            // init range picker
+            rangePicker.render(chart);
+
+            // create range selector
+            var rangeSelector = anychart.ui.rangeSelector();
+            // init range selector
+            rangeSelector.render(chart);
+
+            // sets the title of the chart
+            chart.title(namaEmiten + ' Inc. Stock Chart');
+
+            // set container id for the chart
+            chart.container('container');
+
+            // initiate chart drawing
+            chart.draw();
+            }
+        );
+    </script>
+</body>
+</html>

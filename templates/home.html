@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>StockSavvy</title>
+
+    <style>
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            text-align: center;
+            margin: 0;
+            /* background-color: white; */
+            /* background-image: "{{ url_for('static', filename='Home.gif') }}"; */
+        }
+        h1 {
+            font-size: 50px;
+            margin-bottom: 20px;
+            color: #333;
+        }
+        .button-container {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            padding: 10px;
+            z-index: 1; /* Ensure the button container is on top of other elements */
+        }
+        .button-container a.button {
+            margin-right: 10px;
+            background-color: transparent;
+            border: 2px solid transparent;
+            padding: 10px 15px;
+            font-size: 16px;
+            color: black;
+            text-decoration: none;
+            transition: background-color 0.3s ease, transform 0.3s ease, border-color 0.3s ease;
+        }
+        .button-container a.button:hover {
+            background-color: #e0e0e0;
+            transform: scale(1.05);
+            border-color: #333;
+        }
+
+        .logo-container img {
+            position: fixed;
+            top: 10px;
+            left: 10px;
+            padding: 10px;
+            width: 100px;
+            height: 60px;
+        }
+        .container-background {
+            position: fixed;
+            left: 0px;
+            right: 0px;
+            top: 80px;
+            height: 100%;
+            width: 100%;
+            z-index: -1;
+           pointer-events: none;
+        }
+        .container-background img {
+            /* position: fixed;
+            left: 0px;
+            right: 0px;
+            top: 80px; */
+            height: 100%;
+            width: 100%;
+            z-index: -1;
+            pointer-events: none;
+        }
+        .container-mulai {
+            margin-top: 30px;
+        }
+        .container-mulai a.button {
+            margin-top: 20px;
+            background-color: #333;
+            border: 2px solid #333;
+            padding: 10px 15px;
+            font-size: 16px;
+            color: white;
+            text-decoration: none;
+            transition: background-color 0.3s ease, transform 0.3s ease, border-color 0.3s ease;
+            border-radius: 5px;
+        }
+        .container-mulai a.button:hover {
+            background-color: #555;
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body>
+    <div class="button-container">
+        <a href="/" class="button">Home</a>
+        <a href="/actual" class="button">Actual</a>
+        <a href="/prediksi/" class="button">Predict</a>
+        <a href="/fundamental" class="button">Fundamental</a>
+        <a href="/profil" class="button">Contact</a>
+    </div>
+    
+    <div class="logo-container">
+        <img src="{{ url_for('static', filename='logo.png') }}" alt="Logo">
+    </div>
+
+    <div class="container-background">
+        <img src="{{ url_for('static', filename='Home1.gif') }}" alt="My GIF">
+    </div>
+    
+    <h1>Selamat Datang di StockSavvy!</h1>
+
+    <div class="container-mulai">
+        <a href="/fitur" class="button">Get Started</a>
+
+        <!-- <a href="/prediksi/" class="button">Predict Stock</a> -->
+    </div>
+
+    
+</body>
+</html>
